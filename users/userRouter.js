@@ -78,11 +78,21 @@ router.put('/:id', (req, res) => {
         });
 });
 function validateUserId(req, res, next) {
-  // do your magic!
+    const id = req.params.id;
+    db.getById(id)
+        .then(user => {
+            if (!user) {res.status(400).json({message: 'Invalid User ID.'})}
+            else {req.user;
+                  next();
+            }
+        })
+        .catch(error => {
+            console.log(error);
+            res.status(500).json({message: 'Error retrieving user ID.'});
+        });
 }
-
 function validateUser(req, res, next) {
-  // do your magic!
+
 }
 
 function validatePost(req, res, next) {
